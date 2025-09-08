@@ -1,0 +1,82 @@
+package Circulo_2D;
+import java.util.Scanner;
+
+public class Circulo2D {
+	double x, y, radio;
+	
+	
+	public  Circulo2D() {
+		x=0;
+		y=0;
+		radio=1;
+		
+	}
+	
+	public Circulo2D(double a,double b,double c) {
+		x=a;
+		y=b;
+		radio=c;
+		
+	}
+	
+
+	public double getx() {
+		return x;
+	}
+	
+	public double gety() {
+		return y;
+	}
+	
+	public double getradio() {
+		return radio;
+	}
+	
+	
+	public double getArea() {
+	    return Math.PI * Math.pow(radio, 2);
+	  }
+	
+	public double getPerimetro() {
+	    return 2 * Math.PI * radio;
+	  }
+	
+	public boolean contienepunto(double a, double b) {
+	    double distanciacentros = Math.sqrt(Math.pow(a - x, 2) + Math.pow(b - y, 2));
+	    return distanciacentros <= radio;
+	  }
+	
+	public boolean contienecirculo(Circulo2D circulo) {
+	    double distanciacentros = Math.sqrt(Math.pow(circulo.getx() - x, 2) + Math.pow(circulo.gety() - y, 2));
+	    return distanciacentros + circulo.getradio() <= radio;
+	  }
+	
+	public boolean sobrepone(Circulo2D circulo) {
+        double distanciacentros = Math.sqrt(Math.pow(circulo.getx() - x, 2) + Math.pow(circulo.gety() - y, 2));
+        return distanciacentros <= (radio + circulo.getradio());
+    }
+
+}
+//main
+
+
+package Circulo_2D;
+import java.util.Scanner;
+public class main {
+
+	public static void main(String[] args) {
+		Circulo2D c1= new Circulo2D(2,0,1);
+		Circulo2D c2= new Circulo2D(2,0,0.5);
+		Circulo2D c3= new Circulo2D(0,0,2);
+		
+		
+		
+		System.out.println("Área : " + c1.getArea());
+		System.out.println("Perimetro : " + c1.getPerimetro());
+        System.out.println("c1 contiene punto (2.5,0): " + c1.contienepunto(2.5, 0));
+        System.out.println("c1 contiene c2(2,0,0.5): " + c1.contienecirculo(c2));
+        System.out.println("c1 se sobrepone con c3(0,0,2): " + c1.sobrepone(c3));
+
+	}
+
+}
