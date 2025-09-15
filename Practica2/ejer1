@@ -1,0 +1,91 @@
+import math
+
+class AlgebraVectorial:
+
+    def __init__(self, x=0, y=0, z=0):
+        self.x = x
+        self.y = y
+        self.z = z
+
+  
+    def __add__(self, other):
+        return AlgebraVectorial(self.x + other.x, self.y + other.y, self.z + other.z)
+
+
+    def __sub__(self, other):
+        return AlgebraVectorial(self.x - other.x, self.y - other.y, self.z - other.z)
+
+
+    def __mul__(self, other):
+        return self.x*other.x + self.y*other.y + self.z*other.z
+
+  
+    def cross(self, other):
+        return AlgebraVectorial(
+            self.y*other.z - self.z*other.y,
+            self.z*other.x - self.x*other.z,
+            self.x*other.y - self.y*other.x
+        )
+
+
+    def magnitud(self):
+        return math.sqrt(self.x**2 + self.y**2 + self.z**2)
+
+
+
+
+    def es_perpendicular(self, other, metodo=1):
+        if metodo == 1:  
+            return math.isclose((self+other).magnitud(), (self-other).magnitud())
+        elif metodo == 2: 
+            return math.isclose((self-other).magnitud(), (other-self).magnitud())
+        elif metodo == 3: 
+            return math.isclose(self*other, 0.0)
+        elif metodo == 4:  
+            return math.isclose((self+other).magnitud()**2,
+                                self.magnitud()**2 + other.magnitud()**2)
+        return False
+
+
+
+    
+    def es_paralelo(self, other, metodo=1):
+        if metodo == 1:  # a = r b  -> cociente constante
+            try:
+                r_x = self.x / other.x if other.x != 0 else None
+                r_y = self.y / other.y if other.y != 0 else None
+                r_z = self.z / other.z if other.z != 0 else None
+                valores = [r for r in (r_x, r_y, r_z) if r is not None]
+                return all(math.isclose(val, valores[0]) for val in valores)
+            except ZeroDivisionError:
+                return False
+        elif metodo == 2:  
+            return self.cross(other).magnitud() == 0
+        return False
+
+
+    
+    def proyeccion(self, other):
+        factor = (self*other) / (other.magnitud()**2)
+        return AlgebraVectorial(other.x*factor, other.y*factor, other.z*factor)
+
+
+   
+    def componente(self, other):
+        return (self*other) / other.magnitud()
+
+    
+
+    def __repr__(self):
+        return f"({self.x}, {self.y}, {self.z})"
+
+
+#PRUEBA
+
+a = AlgebraVectorial(1, 0, 0)
+b = AlgebraVectorial(0, 1, 0)
+
+print("¿ay b son perpendiculares (metodo 3)?", a.es_perpendicular(b, 3))
+print("¿a y b son paralelos (metodo 2)?", a.es_paralelo(b, 2))
+print("Proyección de a sobre b:", a.proyeccion(b))
+print("Componente de a en b:", a.componente(b))
