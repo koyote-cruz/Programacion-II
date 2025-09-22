@@ -1,0 +1,180 @@
+package ejer1;
+import java.util.Scanner;
+public class Juego {
+ int numeroDeVidas, record=0;
+
+ 
+ public Juego(int vidas) {
+	 numeroDeVidas=vidas;
+	 record=0;
+	 
+ }
+public void reiniciarPartida() {
+	;
+	System.out.print("Nueva Partida\n");
+}
+
+public void actualizaRecord() {
+	if(numeroDeVidas>record) {
+		record=numeroDeVidas;
+		System.out.print("Nuevo Record:"+record+"Vidas restantes");
+	}
+}
+
+public boolean quitaVida() {
+	numeroDeVidas--;
+	System.out.print("TE QUEDAN  "+numeroDeVidas+"  VIDAS\n");
+	return numeroDeVidas>0;
+
+	
+}
+}
+
+
+//
+
+
+
+package ejer1;
+import java.util.Scanner;
+public class JuegoAdivinaNumero extends Juego {
+	int numeroAAdivinar;
+	Scanner sc = new Scanner(System.in);
+	
+	public JuegoAdivinaNumero (int vidas) {
+		super(vidas);
+		numeroAAdivinar=0;
+		
+	}
+	
+	public void Juega() {
+		reiniciarPartida();
+		
+		numeroAAdivinar = (int) Math.floor(Math.random() * 11);
+	
+		
+		while(true) {
+		
+        System.out.print("adivine un numero entre el 0 y el 10 ");
+        int x= sc.nextInt();
+        
+        if (!validaNumero(x)) {
+            
+            continue;
+        	}
+        
+        if(x==numeroAAdivinar) {
+        	System.out.print("Acertasteee\n");
+        	actualizaRecord();
+        	break;
+        }
+        else {
+        	boolean v=quitaVida();
+        	if (!v) {
+        		System.out.print("SIN VIDAS,FIN DEL JUEGO");
+        		System.out.print("EL NUMERO ERA  "+numeroAAdivinar);
+        		break;
+        	}
+        	else{
+        		if(x<numeroAAdivinar) {
+        			System.out.print("El número a adivinar es MAYOR\n");
+        		}
+        		else {
+        			System.out.print("El número a adivinar es menor\n");
+        		}
+        		
+        	}
+        }
+       
+		
+	}
+
+	}
+	public boolean validaNumero(int numero) {
+		if (numero>=0 && numero<=10) {
+			return true;
+		}
+		else {
+			System.out.println("Número inválido. Debe estar entre 0 y 10\n");
+			return false;
+		}
+		
+	}
+	
+	
+}
+
+
+
+//
+
+package ejer1;
+import java.util.Scanner;
+public class JuegoAdivinaPar extends JuegoAdivinaNumero {
+
+   
+    public JuegoAdivinaPar(int vidas) {
+        super(vidas); 
+    }
+
+    public boolean validaNumero(int numero) {
+        if (numero < 0 || numero > 10) {
+            System.out.println("Número fuera de rango (0-10)\n");
+            return false;
+        }
+        if (numero % 2 == 0) {
+            return true;
+        } else {
+            System.out.println("Número impar. Debe ser par\n");
+            return false;
+        }
+    }
+	}
+
+ //
+
+
+ package ejer1;
+
+public class JuegoAdivinaImpar extends JuegoAdivinaNumero{
+	 public JuegoAdivinaImpar(int vidas) {
+	        super(vidas); 
+	    }
+	 
+	 public boolean validaNumero(int numero) {
+	        if (numero < 0 || numero > 10) {
+	            System.out.println("Número fuera de rango (0-10)\n");
+	            return false;
+	        }
+	        if (numero % 2 != 0) {
+	            return true;
+	        } else {
+	            System.out.println("Número par. Debe ser impar\n");
+	            return false;
+	        }
+	    }
+
+}
+
+
+//
+
+
+package ejer1;
+import java.util.Scanner;
+public class main {
+
+	public static void main(String[] args) {
+		JuegoAdivinaNumero juegoNumero = new JuegoAdivinaNumero(3);
+        System.out.println("=== Juego Adivina Número ===");
+        juegoNumero.Juega();
+
+        JuegoAdivinaPar juegoPar = new JuegoAdivinaPar(3);
+        System.out.println("\n=== Juego Adivina Número Par ===");
+        juegoPar.Juega();
+
+        JuegoAdivinaImpar juegoImpar = new JuegoAdivinaImpar(3);
+        System.out.println("\n=== Juego Adivina Número Impar ===");
+        juegoImpar.Juega();
+	  }
+	}
