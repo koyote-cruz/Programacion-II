@@ -1,0 +1,119 @@
+package ejer1;
+
+public abstract class Empleado {
+	private String nombre;
+	
+	
+	protected Empleado(String a){
+		nombre=a;
+		
+	}
+	public abstract double CalcularSalarioMensual();
+	
+	public String toString() {
+		return "El nombre es: "+nombre;
+	}
+
+}
+
+//
+
+
+package ejer1;
+
+public class EmpleadoTiempoCompleto extends Empleado {
+	
+	private double salario_anual;
+	
+	
+	protected EmpleadoTiempoCompleto(String a, double b) {
+		super(a);
+		salario_anual=b;
+	}
+
+	@Override
+	public double CalcularSalarioMensual() {
+		return salario_anual/12;
+		
+	}
+	public String toString() {
+		return "EmpleadoTiempoCompleto: "+super.toString()+", salario_anual= "+salario_anual;
+	}
+
+}
+
+//
+
+package ejer1;
+
+public class EmpleadoTiempoHorario extends Empleado {
+
+	private double horas_trabajadas;
+	 private double tarifa_por_hora;
+	
+	
+	protected EmpleadoTiempoHorario(String a,double b, double c) {
+		super(a);
+		horas_trabajadas=b;
+		tarifa_por_hora=c;
+	}
+
+	@Override
+	public double CalcularSalarioMensual() {
+		
+		return horas_trabajadas*tarifa_por_hora;
+	}
+	
+	public String toString() {
+		return "EmpleadoTiempoHorario: "+super.toString()+", horas_trabajadas= "+horas_trabajadas+ ", tarifa_por_hora= "+tarifa_por_hora;
+	}
+
+}
+
+//
+
+package ejer1;
+import java.util.Scanner;
+public class main {
+	
+	public static void main(String[] args) {
+	Scanner sc = new Scanner(System.in);
+
+	Empleado[] empleados = new Empleado[5];
+		
+	System.out.println("TRES EMPLEADOS A TIEMPO COMPLETO");
+	
+	for (int i = 0; i < 3; i++) {
+	System.out.println("Ingrese nombre de empleado#"+(i+1));
+	String nombre = sc.nextLine();
+	System.out.println("Ingrese salario anual del empleado#"+(i+1));
+	double salario = sc.nextDouble();
+	sc.nextLine();
+	
+	 empleados[i] = new EmpleadoTiempoCompleto(nombre, salario);
+	}
+	
+	System.out.println("DOS EMPLEADOS A TIEMPO HORARIO");
+	for (int i = 3; i < 5; i++) {
+		System.out.println("Ingrese nombre de empleado#"+(i+1));
+		String nombre = sc.nextLine();
+		System.out.println("Ingrese horas trabajadas del empleado#"+(i+1));
+		double horas = sc.nextDouble();
+		System.out.println("Ingrese tarifa por hora del empleado#"+(i+1));
+		double tarifa = sc.nextDouble();
+		sc.nextLine();
+		
+		 empleados[i] = new EmpleadoTiempoHorario(nombre, horas, tarifa);
+		}
+	
+	System.out.println("\n=== Lista de Empleados ===");
+    for (Empleado e : empleados) {
+        String nombre = e.toString();
+        double salario= e.CalcularSalarioMensual();
+        System.out.println("Nombre: " + nombre + " | Salario: " + salario);
+    }
+
+    sc.close();
+}
+
+}
