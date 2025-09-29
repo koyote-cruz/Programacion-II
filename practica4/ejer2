@@ -1,0 +1,123 @@
+package ejer2;
+
+public interface Coloreado {
+	public String comoColorear();
+
+}
+
+//
+
+package ejer2;
+
+public abstract class Figura {
+	private String color;
+	
+	 public Figura(String a) {
+	    color = a;
+	}
+	public String getColor() {
+		return color;
+	}
+	public String setColor(String a) {
+		return color=a;
+	}
+	public String toString() {
+		return "El color es: "+color;
+	}
+	public abstract double area();
+	public abstract double perimetro();
+	
+
+}
+
+//
+
+package ejer2;
+
+public class Cuadrado extends Figura implements Coloreado {
+	private double lado;
+	
+	public Cuadrado( String a,double b) {
+        super(a);
+        lado = b;
+    }
+	
+	@Override
+	public String comoColorear() {
+		return "Colorear los cuatro lados";
+	}
+
+	@Override
+	public double area() {
+		return lado*lado;
+	}
+
+	@Override
+	public double perimetro() {		
+		return 4*lado;
+	}
+
+}
+
+
+//
+
+package ejer2;
+
+public class Circulo extends Figura {
+	private double radio;
+	
+	
+	public Circulo(String a, double b) {
+		super(a);
+		radio=b;
+	}
+
+	@Override
+	public double area() {
+		return Math.PI * radio * radio;
+	}
+
+	@Override
+	public double perimetro() {
+		return 2 * Math.PI * radio;
+	}
+
+}
+
+//
+
+package ejer2;
+import java.util.Random;
+public class main {
+
+	public static void main(String[] args) {
+		Random rand = new Random();
+        Figura[] figuras = new Figura[5];
+
+        for (int i = 0; i < figuras.length; i++) {
+            int tipo = rand.nextInt(2) + 1; 
+            String color = "Color" + (i + 1);
+
+            if (tipo == 1) {
+                double lado = 1 + rand.nextDouble() * 9; 
+                figuras[i] = new Cuadrado(color,lado);
+            } else {
+                double radio = 1 + rand.nextDouble() * 9; 
+                figuras[i] = new Circulo(color,radio);
+            }
+        }
+
+        
+        for (Figura f : figuras) {
+            System.out.println(f.toString());
+            System.out.printf("Área: %.2f%n", f.area());
+            System.out.printf("Perímetro: %.2f%n", f.perimetro());
+
+            if (f instanceof Coloreado) {
+                System.out.println(((Coloreado) f).comoColorear());
+            }
+        }
+    }
+
+	}
