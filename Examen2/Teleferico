@@ -1,0 +1,107 @@
+package Teleferico;
+
+public class Persona {
+	private String nombre;
+	private int edad;
+	private float pesoPersona;
+	
+	public Persona(String nombre, int edad, float peso){
+		this.nombre=nombre;
+		this.edad=edad;
+		this.pesoPersona=peso;
+		
+		
+	}
+	public String toString(){
+		return "Persona: "+nombre+" , "+edad+" , "+pesoPersona;
+	}
+	
+
+}
+}
+//
+
+package Teleferico;
+
+import java.util.ArrayList;
+
+public class Cabina {
+	
+	private int nroCabina;
+	private ArrayList<Persona> personasAbordo;
+	
+	public Cabina(int nro){
+		this.nroCabina=nro;
+		this.personasAbordo= new ArrayList<Persona>();
+		
+		
+		
+	}
+	public void AgregarPersona(Persona p){
+		personasAbordo.add(p);
+	}
+	
+	public String toString(){
+		return "Cabina: "+nroCabina+" , "+personasAbordo.toString();
+	}
+	
+	//
+
+package Teleferico;
+
+import java.util.ArrayList;
+
+public class Linea {
+	
+	private String color;
+	private int cantidadcabinas;
+	private ArrayList<Persona> filaPersonas;
+	private ArrayList<Cabina> cabinas;
+	
+	public Linea(String color){
+		this.color=color;
+		this.filaPersonas= new ArrayList<Persona>();
+		this.cabinas= new ArrayList<Cabina>();
+	}
+	
+	public void AgregarPersona(Persona p){
+		filaPersonas.add(p);
+	}
+	
+	public void AgregarCabina(int nroCabina){
+		cabinas.add(new Cabina(nroCabina));
+	}
+	
+	public String toString(){
+		return "Linea: "+color+" , "+cantidadcabinas+" , "+filaPersonas.toString()+" , "+cabinas.toString();
+	}
+	
+
+}
+
+package Teleferico;
+
+import java.util.ArrayList;
+
+public class Teleferico {
+	
+	private ArrayList<Linea> lineas;
+	private float cantidadIngresos;
+	
+	public Teleferico(){
+		this.lineas=new ArrayList<Linea>();
+		
+		
+	}
+	
+	public void AgregarPersonaFila(Persona p, String linea){
+		this.lineas=new ArrayList<Linea>();
+		
+		
+	}
+	
+	public void AgregarCabina(String linea){
+		personasAbordo.add(p);
+	}
+
+}
